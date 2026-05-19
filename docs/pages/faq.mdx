@@ -1,0 +1,81 @@
+---
+title: Frequently Asked Questions
+sidebar_icon: help-circle
+---
+
+# Frequently Asked Questions
+
+## Getting Started
+
+### How do I get an API key?
+Sign up on our [Pricing page](/pricing). After subscribing, your API key is immediately available in your dashboard.
+
+### Is there a free trial?
+Yes. Our Free plan includes 20 API requests per month with no credit card required.
+
+### What's the Time to First Successful Call?
+Most developers make their first successful API call within 5 minutes of signing up[citation:9].
+
+## Pricing & Billing
+
+### How does billing work?
+- **Starter & Pro plans:** Billed monthly in advance. Includes a quota of requests.
+- **Pay As You Go:** Billed at the end of the month for actual usage.
+
+### What happens if I exceed my plan's quota?
+Soft limits allow overages. You simply pay the overage rate ($0.02 for Starter, $0.01 for Pro) per additional request[citation:3].
+
+### Can I switch plans mid-month?
+Yes. Your plan updates immediately, and we prorate the difference.
+
+## API & Integration
+
+### What data niches are available?
+Over 400,000 niches across logistics, real estate, healthcare, and finance.
+
+### Do you provide SDKs?
+Yes. We maintain official SDKs for:
+- Python
+- JavaScript/TypeScript
+- Go
+- Java
+
+### Is there an interactive console?
+Yes. Our API Reference page includes a "Try it" console where you can test endpoints with your API key[citation:4].
+
+### Do you support MCP?
+Yes. MCP Server access is included in Starter and Pro plans.
+
+## Security & Compliance
+
+### Is my API key secure?
+All requests require Bearer token authentication over HTTPS. Never share your key publicly[citation:4].
+
+### What's your uptime guarantee?
+99.9% SLA for paid plans.
+
+### How do I rotate my API key?
+Go to your dashboard → API Keys → Rotate. Your old key will be deactivated immediately.
+
+## Troubleshooting
+
+### I'm getting a 401 Unauthorized error
+Your API key is missing or invalid[citation:5]. Include it in the `Authorization: Bearer YOUR_API_KEY` header.
+
+### I'm getting a 403 Forbidden error
+You have exceeded your plan's quota or your subscription has expired[citation:5]. Upgrade your plan or wait for the monthly reset.
+
+### I'm getting a 404 Not Found error
+The niche identifier doesn't exist. Verify the format: `{industry}-niche-{number}`.
+
+## Support
+
+### How do I get help?
+| Plan | Support Channel | Response Time |
+|------|----------------|---------------|
+| Free | Email | 3-5 business days |
+| Starter | Email | 24-48 hours |
+| Pro | Email + Chat | 12 hours (priority) |
+| Enterprise | Dedicated Slack | 4 hours (SLA) |
+
+**Email:** support@aidata.com

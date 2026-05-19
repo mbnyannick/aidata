@@ -1,0 +1,592 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AI Data Gateway API",
+    "version": "1.0.0",
+    "description": "Complete CRUD operations for logistics, real estate, healthcare, and finance compliance data.",
+    "contact": {
+      "name": "API Support",
+      "email": "support@aidata.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://aidata-maina-2f70005.zuplo.app",
+      "description": "Production Gateway"
+    }
+  ],
+  "tags": [
+    { "name": "Logistics",   "description": "Border wait times, port codes, lane status, freight compliance" },
+    { "name": "Real Estate", "description": "Zoning codes, building permits, tax credits, compliance rules" },
+    { "name": "Healthcare",  "description": "ICD-10 codes, CPT codes, HIPAA compliance, billing rules" },
+    { "name": "Finance",     "description": "SEC filings, ESG metrics, ISO controls, audit data" }
+  ],
+  "paths": {
+    "/mcp/logistics-niche/{id}": {
+      "get": {
+        "tags": ["Logistics"],
+        "summary": "Get logistics data by niche ID",
+        "operationId": "getLogisticsByNicheId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "The niche ID (e.g., 450)"
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not found" }
+        },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      }
+    },
+    "/mcp/logistics": {
+      "get": {
+        "tags": ["Logistics"],
+        "summary": "List all logistics records",
+        "operationId": "listLogistics",
+        "parameters": [
+          { "name": "limit",  "in": "query", "schema": { "type": "integer", "default": 50 } },
+          { "name": "offset", "in": "query", "schema": { "type": "integer", "default": 0  } }
+        ],
+        "responses": { "200": { "description": "List of logistics records" } },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      },
+      "post": {
+        "tags": ["Logistics"],
+        "summary": "Create logistics record",
+        "operationId": "createLogistics",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["port_code", "wait_minutes"],
+                "properties": {
+                  "port_code":     { "type": "string",  "example": "2402" },
+                  "wait_minutes":  { "type": "integer", "example": 42 },
+                  "active_booths": { "type": "integer", "example": 6 }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Record created" } },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      }
+    },
+    "/mcp/logistics/{id}": {
+      "get": {
+        "tags": ["Logistics"],
+        "summary": "Get logistics record",
+        "operationId": "getLogisticsById",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Record found" },
+          "404": { "description": "Not found" }
+        },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      },
+      "put": {
+        "tags": ["Logistics"],
+        "summary": "Update logistics record",
+        "operationId": "updateLogistics",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "port_code":     { "type": "string"  },
+                  "wait_minutes":  { "type": "integer" },
+                  "active_booths": { "type": "integer" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Record updated" } },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      },
+      "delete": {
+        "tags": ["Logistics"],
+        "summary": "Delete logistics record",
+        "operationId": "deleteLogistics",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "204": { "description": "Record deleted" },
+          "404": { "description": "Not found" }
+        },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      }
+    },
+    "/mcp/realestate": {
+      "get": {
+        "tags": ["Real Estate"],
+        "summary": "List all real estate records",
+        "operationId": "listRealEstate",
+        "responses": { "200": { "description": "List of real estate records" } },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      },
+      "post": {
+        "tags": ["Real Estate"],
+        "summary": "Create real estate record",
+        "operationId": "createRealEstate",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["city", "zoning_district"],
+                "properties": {
+                  "city":            { "type": "string",  "example": "Austin" },
+                  "state":           { "type": "string",  "example": "Texas"  },
+                  "zoning_district": { "type": "string",  "example": "MF-3"   },
+                  "max_height_feet": { "type": "integer", "example": 40       }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Record created" } },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      }
+    },
+    "/mcp/realestate/{id}": {
+      "get": {
+        "tags": ["Real Estate"],
+        "summary": "Get real estate record",
+        "operationId": "getRealEstateById",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Record found" },
+          "404": { "description": "Not found" }
+        },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      },
+      "put": {
+        "tags": ["Real Estate"],
+        "summary": "Update real estate record",
+        "operationId": "updateRealEstate",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "zoning_district": { "type": "string"  },
+                  "max_height_feet": { "type": "integer" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Record updated" } },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      },
+      "delete": {
+        "tags": ["Real Estate"],
+        "summary": "Delete real estate record",
+        "operationId": "deleteRealEstate",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "204": { "description": "Record deleted" },
+          "404": { "description": "Not found" }
+        },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      }
+    },
+    "/mcp/healthcare": {
+      "get": {
+        "tags": ["Healthcare"],
+        "summary": "List all healthcare records",
+        "operationId": "listHealthcare",
+        "responses": { "200": { "description": "List of healthcare records" } },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      },
+      "post": {
+        "tags": ["Healthcare"],
+        "summary": "Create healthcare record",
+        "operationId": "createHealthcare",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["icd_code", "description"],
+                "properties": {
+                  "icd_code":    { "type": "string", "example": "I10" },
+                  "description": { "type": "string", "example": "Essential hypertension" },
+                  "category":    { "type": "string", "example": "Circulatory System" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Record created" } },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      }
+    },
+    "/mcp/healthcare/{id}": {
+      "get": {
+        "tags": ["Healthcare"],
+        "summary": "Get healthcare record",
+        "operationId": "getHealthcareById",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Record found" },
+          "404": { "description": "Not found" }
+        },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      },
+      "put": {
+        "tags": ["Healthcare"],
+        "summary": "Update healthcare record",
+        "operationId": "updateHealthcare",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "icd_code":    { "type": "string" },
+                  "description": { "type": "string" },
+                  "category":    { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Record updated" } },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      },
+      "delete": {
+        "tags": ["Healthcare"],
+        "summary": "Delete healthcare record",
+        "operationId": "deleteHealthcare",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "204": { "description": "Record deleted" },
+          "404": { "description": "Not found" }
+        },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      }
+    },
+    "/mcp/finance": {
+      "get": {
+        "tags": ["Finance"],
+        "summary": "List all finance records",
+        "operationId": "listFinance",
+        "responses": { "200": { "description": "List of finance records" } },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      },
+      "post": {
+        "tags": ["Finance"],
+        "summary": "Create finance record",
+        "operationId": "createFinance",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["ticker", "filing_type"],
+                "properties": {
+                  "ticker":      { "type": "string",  "example": "AAPL" },
+                  "filing_type": { "type": "string",  "example": "10-K" },
+                  "fiscal_year": { "type": "integer", "example": 2025   }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Record created" } },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      }
+    },
+    "/mcp/finance/{id}": {
+      "get": {
+        "tags": ["Finance"],
+        "summary": "Get finance record",
+        "operationId": "getFinanceById",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Record found" },
+          "404": { "description": "Not found" }
+        },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      },
+      "put": {
+        "tags": ["Finance"],
+        "summary": "Update finance record",
+        "operationId": "updateFinance",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ticker":      { "type": "string"  },
+                  "filing_type": { "type": "string"  },
+                  "fiscal_year": { "type": "integer" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Record updated" } },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      },
+      "delete": {
+        "tags": ["Finance"],
+        "summary": "Delete finance record",
+        "operationId": "deleteFinance",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "204": { "description": "Record deleted" },
+          "404": { "description": "Not found" }
+        },
+        "x-zuplo-route": {
+          "handler": {
+            "export": "urlForwardHandler",
+            "module": "$import(@zuplo/runtime)",
+            "options": {
+              "baseUrl": "https://ai-data-vault.onrender.com/mcp/"
+            }
+          },
+          "policies": { "inbound": ["monetization-inbound"] }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Authorization: Bearer YOUR_API_KEY"
+      }
+    }
+  },
+  "security": [
+    { "ApiKeyAuth": [] }
+  ]
+}

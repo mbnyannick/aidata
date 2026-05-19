@@ -1,0 +1,27 @@
+---
+title: SDKs & Client Libraries
+sidebar_icon: code
+---
+
+# SDKs & Client Libraries
+
+Use our official SDKs to integrate AI Data Gateway into your application faster.
+
+## Official SDKs
+
+| Language | Package | Installation |
+|----------|---------|--------------|
+| **Python** | `aidata-sdk-python` | `pip install aidata-sdk` |
+| **JavaScript/TypeScript** | `aidata-sdk-js` | `npm install @aidata/sdk` |
+| **Go** | `aidata-sdk-go` | `go get github.com/aidata/sdk-go` |
+| **Java** | `aidata-sdk-java` | Maven: `com.aidata:sdk:1.0.0` |
+
+## Quick Examples
+
+### Python
+```python
+from aidata import AIDataClient
+
+client = AIDataClient(api_key="YOUR_API_KEY")
+data = client.get_niche("logistics-niche-450")
+print(data.telemetry_data)
